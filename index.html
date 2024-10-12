@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خادم وكيل آمن</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body dir="rtl">
+  <header>
+    <h1>خادم الوكيل الآمن</h1>
+    <p>تصفح بأمان وتشفير بياناتك بسهولة</p>
+  </header>
+
+  <div class="container">
+    <section>
+      <h2>التنقل عبر الوكيل</h2>
+      <input type="text" id="urlInput" placeholder="أدخل رابط الموقع المراد تصفحه" aria-label="رابط الموقع">
+      <button onclick="navigate()">تصفح</button>
+    </section>
+
+    <section>
+      <h2>تشفير / فك تشفير البيانات</h2>
+      <input type="text" id="dataInput" placeholder="أدخل البيانات للتشفير" aria-label="البيانات">
+      <button onclick="encryptData()">تشفير</button>
+      <button onclick="decryptData()">فك التشفير</button>
+    </section>
+
+    <div class="output">
+      <p id="output">ستظهر النتيجة هنا...</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 خادم الوكيل الآمن - جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script>
+    function navigate() {
+      const url = document.getElementById("urlInput").value;
+      window.location.href = `/proxy?url=${encodeURIComponent(url)}`;
+    }
+
+    async function encryptData() {
+      const data = document.getElementById("dataInput").value;
+      const response = await fetch(`/encrypt?data=${encodeURIComponent(data)}`);
+      const result = await response.text();
+      document.getElementById("output").innerText = result;
+    }
+
+    async function decryptData() {
+      const data = document.getElementById("dataInput").value;
+      const response = await fetch(`/decrypt?data=${encodeURIComponent(data)}`);
+      const result = await response.text();
+      document.getElementById("output").innerText = result;
+    }
+  </script>
+</body>
+</html>
